@@ -14,16 +14,15 @@ void set_matrix(struct matrix* m, int** massive){
             int res = *massive;
             m->mat[i][j] = res;
             massive++;
-            //printf("%i\n",m->mat[i][j]);
         }
     }
 }
 void sum_matrix(struct matrix* m, struct matrix* m1){
     for(int i=0; i<m->height; i++){
         for(int j=0; j<m->width; j++){
-            printf("%i\n",m->mat[i][j]);
             int res = m1->mat[i][j];
             m->mat[i][j] = m->mat[i][j]+res;
+            printf("%i\n",m->mat[i][j]);
         }
     }
 }
@@ -44,43 +43,37 @@ void mult_matrix(struct matrix* m, struct matrix* m1){
     for(int i=0; i<m1->height; i++){
         res[i] = calloc(rows,sizeof(int));
         for(int j=0; j<m1->width; j++){
-            //for(int i1=0; i1<m->height; i1++){
-                for(int j1=0; j1<m->width; j1++){
-                    int a = m->mat[j][j1];
-                    int b = m1->mat[i][j];
-                    res[i][j1] += a*b;
-                    //printf("%i,",res[i][j1]);
-                }
-            //}
+            for(int j1=0; j1<m->width; j1++){
+                int a = m->mat[j][j1];
+                int b = m1->mat[i][j];
+                res[i][j1] += a*b;
+            }
         }
-        //printf("\n\n");
     }
     free(m->mat);
     m->mat = res;
     m->height = m1->height;
     for(int i=0; i<m->height; i++){
         for(int j=0; j<m->width; j++){
-            printf("%i",m->mat[i][j]);
+            if(j!=m->width-1){
+                printf("%i,",m->mat[i][j]);
+            } else {
+                printf("%i",m->mat[i][j]);
+            }
         }
         printf("\n\n");
     }
-    /*for(int i=0; i<m->height; i++){
+}
+void transpositon(struct matrix* m){
+    int height = m->height;
+    m->height = m->width;
+    m->width = height;
+    int** push = calloc(m->height,sizeof(int*));
+    int rows = malloc(sizeof(int)*m->height);
+    for(int i=0; i<m->height; i++){
+        push[i] = calloc(rows,sizeof(int));
         for(int j=0; j<m->width; j++){
-            int** res = calloc(m1->width,sizeof(int*));
-            for(int j1=0; j1<m1->width; j1++){
-                int mat1 = m1->mat[i][j1];
-                int mat2 = m->mat[j1][j];
-                res[j1] = mat1 * mat2;
-                //printf("%i * %i. %i  %i \n",m1->mat[i][j1],m->mat[j1][j], j1, j);
-                //printf("%i\n",res[j1]);
-            }
-            for(int i1=0; i1<m1->width; i1++){
-                int mat = res[i1];
-                m->mat[i][j] += mat;
-            }
-            printf("%i,",m->mat[i][j]);
-            free(res);
+            push[i][j] = m->mat[j][i];
         }
-        printf("\n\n");
-    }*/
+    }
 }
