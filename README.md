@@ -3,3 +3,4 @@ To begin with, you can include the matrix operations you are interested in in yo
 All actions are stored in the files matrix.h and matrix.c.
 <h1>Why</h1>
 I just like learning linear algebra, and this way you can consolidate the material.
+<h1>There is no license</h1>
